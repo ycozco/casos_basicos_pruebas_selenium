@@ -1,0 +1,51 @@
+Guía Manual de Automatización: Inscripción Masiva en TEAMMATES
+
+1. Requisitos Previos
+- Python 3.8 o superior instalado.
+- Google Chrome instalado.
+- ChromeDriver compatible con tu versión de Chrome.
+- Acceso a TEAMMATES como instructor.
+- Archivo students_cp012.csv en la carpeta del proyecto.
+
+2. Crear y Activar un Entorno Virtual (venv)
+cd d:\python\python_pruebas_software
+python -m venv venv
+.\venv\Scripts\Activate
+
+3. Instalar Dependencias
+pip install selenium
+
+4. Preparar el Perfil de Chrome para Depuración
+Opción 1: Usar perfil de usuario actual
+& "C:\Program Files\Google\Chrome\Application\chrome.exe" --remote-debugging-port=9222 --user-data-dir="C:\Users\yoset\AppData\Local\Google\Chrome\User Data"
+
+Opción 2: Crear perfil limpio
+& "C:\Program Files\Google\Chrome\Application\chrome.exe" --remote-debugging-port=9222 --user-data-dir="C:\Users\yoset\chrome_debug"
+
+- Mantén esta ventana abierta y accede a TEAMMATES manualmente.
+
+5. Configuración de Selenium
+Asegúrate de que driver_setup.py tenga:
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+
+def get_driver():
+    options = Options()
+    options.add_experimental_option("debuggerAddress", "127.0.0.1:9222")
+    driver = webdriver.Chrome(options=options)
+    return driver
+
+6. Ejecutar la Automatización
+python test_cp012.py
+- El script llenará la tabla y hará la inscripción masiva.
+- Espera el mensaje de éxito y muestra el resultado en consola.
+
+7. Validación Visual
+- Verifica en TEAMMATES que los 120 estudiantes estén correctamente inscritos y distribuidos.
+- Confirma que no haya errores ni advertencias.
+
+8. Cierre
+- El script cerrará el navegador automatizado.
+- Puedes cerrar Chrome en modo depuración manualmente.
+
+Para crear el PDF: Copia este contenido a Word, Google Docs o cualquier editor de texto y usa la opción "Guardar como PDF" o "Exportar a PDF".
